@@ -446,8 +446,8 @@ Example: "Windows Media" becomes "windows-media" */
 }
 /* Neutral palette: graphite, silver, white. */
 .yasb-bar {
-    background-color: rgba(18, 18, 18, 0.64);
-    border: 1px solid rgba(178, 178, 178, 0.20);
+    background-color: rgba(18, 18, 18, 0.80);
+    border: none;
 }
 .glazewm-workspaces .ws-btn.active_populated,
 .glazewm-workspaces .ws-btn.active_empty {
@@ -466,3 +466,52 @@ Example: "Windows Media" becomes "windows-media" */
     background-color: rgba(24, 24, 24, 0.86);
 }
 .power-menu-popup .button.hover .icon { color: #f0f0f0; }
+/* Bluetooth toggle beside the power menu. */
+.bluetooth-widget .icon { font-size: 16px; color: #e0e0e0; }
+.bluetooth-widget .icon.bt-off { color: #7b7b7b; }
+.bluetooth-widget .icon.bt-on { color: #bcbcbc; }
+.bluetooth-widget .icon.bt-connected { color: #f0f0f0; }
+/* Keyboard language and network speeds. */
+.language-widget { padding: 0 8px; }
+.language-widget .label { color: #e0e0e0; font-weight: 700; }
+.traffic-widget { padding: 0 8px; }
+.traffic-widget .label { color: #bcbcbc; min-width: 224px; max-width: 224px; }
+.language-menu { background-color: rgba(24, 24, 24, 0.96); border-radius: 8px; min-width: 240px; }
+.language-menu .header { padding: 8px 12px; font-family: 'Segoe UI'; font-size: 13px; }
+.language-menu .footer { padding: 8px 12px; font-family: 'Segoe UI'; }
+.language-menu .footer:hover { background-color: #333333; }
+.language-menu .language-item { padding: 6px 12px; margin: 2px 4px; }
+.language-menu .language-item.active { background-color: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+.language-menu .language-item:hover { background-color: rgba(255, 255, 255, 0.06); border-radius: 4px; }
+.language-menu .language-item .code { min-width: 40px; font-weight: 700; font-size: 14px; }
+.language-menu .language-item .icon { font-size: 16px; margin-right: 8px; }
+.language-menu .language-item .name { font-family: 'Segoe UI'; font-size: 13px; }
+.language-menu .language-item .layout { font-family: 'Segoe UI'; font-size: 12px; color: #bcbcbc; }
+/* Keep the clock centered on the 1920px primary monitor. */
+.container-left, .container-right {
+    min-width: 880px;
+    max-width: 880px;
+}
+.clock-widget .label { padding: 2px 2px 1px 2px; }
+.container-right .widget { padding-left: 6px; padding-right: 6px; }
+.media-widget .label { max-width: 180px; }
+/* YASB panel typography */
+.yasb-bar .widget .label {
+    font-family: "Medeo Sans";
+    font-weight: 600;
+}
+.yasb-bar .language-widget .label {
+    font-weight: 700;
+}
+.yasb-bar .power-menu-widget .label {
+    font-weight: 500;
+}
+.yasb-bar .widget .icon,
+.yasb-bar .power-menu-widget .label {
+    font-family: "JetBrainsMono NFP";
+}
+
+.ajazz-battery-widget .icon {
+    font-size: 15px;
+    color: #e0e0e0;
+}

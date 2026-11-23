@@ -20,7 +20,7 @@ bars:
       enabled: true
       duration: 1000
     blur_effect:
-      enabled: true
+      enabled: false
       acrylic: false
       dark_mode: false
       round_corners: true
@@ -54,8 +54,12 @@ bars:
         "microphone",
         "volume",
         "cpu",
+        "gpu",
         "memory",
+        "language",
         "notifications",
+        "ajazz_battery",
+        "bluetooth",
         "power_menu"
         ]
 widgets:
@@ -119,10 +123,10 @@ widgets:
     options:
       label: "<span>{icon}</span> {temp}"
       label_alt: "{location}: Min {min_temp}, Max {max_temp}, Humidity {humidity}"
-      api_key: "<Place your API-KEY here (weatherapi is free btw)>"
+      api_key: "env" # Set YASB_WEATHER_API_KEY in your local environment.
       update_interval: 600
       hide_decimal: true
-      location: "Saint Petersburg, Russia"
+      location: "London" # Replace with your preferred city.
       callbacks:
         on_left: "toggle_card"
       icons:
@@ -190,6 +194,36 @@ widgets:
         on_left: "toggle_mute"
         on_middle: "toggle_label"
         on_right: "exec cmd.exe /c start ms-settings:sound"
+  ajazz_battery:
+    type: "yasb.custom.CustomWidget"
+    options:
+      label: "<span>\U000F037D</span> {data}"
+      class_name: "ajazz-battery-widget"
+      tooltip: true
+      tooltip_label: "AJAZZ · {data}"
+      exec_options:
+        run_cmd: 'C:\Users\<USER>\.config\yasb\ajazz-battery.exe' # Set the local path to your AJAZZ helper.
+        run_interval: 30000
+        return_format: "string"
+        hide_empty: true
+        use_shell: false
+      callbacks:
+        on_left: "exec_custom"
+  # Set the local path to toggle-bluetooth.ps1 for the left-click action.
+  bluetooth:
+    type: "yasb.bluetooth.BluetoothWidget"
+    options:
+      label: "<span>{icon}</span>"
+      label_alt: "<span>{icon}</span>"
+      tooltip: true
+      icons:
+        bluetooth_on: "\udb80\udcaf"
+        bluetooth_off: "\udb80\udcb2"
+        bluetooth_connected: "\udb80\udcb1"
+      callbacks:
+        on_left: 'exec powershell.exe -NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy Bypass -File "C:\Users\<USER>\.config\yasb\toggle-bluetooth.ps1"'
+        on_middle: "toggle_menu"
+        on_right: "exec cmd.exe /c start ms-settings:bluetooth"
   power_menu:
     type: "yasb.power_menu.PowerMenuWidget"
     options:
@@ -364,8 +398,8 @@ widgets:
   memory:
     type: "yasb.memory.MemoryWidget"
     options:
-      label: "<span>\uf4bc</span> {virtual_mem_percent}"
-      label_alt: "<span>\uf4bc</span> VIRT: {virtual_mem_percent}% SWAP: {swap_mem_percent}%"
+      label: "<span>\uefc5</span> {virtual_mem_percent}"
+      label_alt: "<span>\uefc5</span> VIRT: {virtual_mem_percent}% SWAP: {swap_mem_percent}%"
       update_interval: 5000
       callbacks:
         on_left: "toggle_label"
@@ -390,3 +424,41 @@ widgets:
         color: "black"
         radius: 3
         offset: [ 1, 1 ]
+  language:
+    type: "yasb.language.LanguageWidget"
+    options:
+      label: "{lang[language_code]}"
+      label_alt: "{lang[language_code]}"
+      update_interval: 1
+      callbacks:
+        on_left: "toggle_menu"
+        on_right: "exec cmd.exe /c start ms-settings:regionlanguage"
+      language_menu:
+        blur: true
+        round_corners: true
+        border_color: "system"
+        alignment: "right"
+        direction: "down"
+  traffic:
+    type: "yasb.traffic.TrafficWidget"
+    options:
+      label: "\u2193 {download_speed}  \u2191 {upload_speed}"
+      label_alt: "\u2193 {download_speed}  \u2191 {upload_speed}"
+      update_interval: 1000
+      interface: "Auto"
+      speed_unit: "bytes"
+      hide_if_offline: false
+      callbacks:
+        on_left: "do_nothing"
+        on_right: "exec cmd.exe /c start ms-settings:network-status"
+  gpu:
+    type: "yasb.gpu.GpuWidget"
+    options:
+      label: "<span>\udb83\udfb2</span> {info[utilization]}% | <span>\udb81\ude1a</span> {info[mem_used]}/{info[mem_total]}"
+      label_alt: "<span>\udb83\udfb2</span> {info[utilization]}% | <span>\udb81\ude1a</span> {info[mem_used]}/{info[mem_total]}"
+      gpu_index: 0
+      update_interval: 2000
+      hide_decimal: true
+      callbacks:
+        on_left: "do_nothing"
+        on_right: "exec cmd.exe /c Taskmgr"
